@@ -25,22 +25,16 @@ const DEEL1_PHASES = [
 
 const DEEL2_PHASES = [
   {
-    label: "Commands & Policies",
+    label: "Commands & Actors",
     duration: 10 * 60,
     color: "#0000D2",
-    description: "Voeg commands en policies toe aan de tijdlijn om de processen te verduidelijken."
+    description: "Voeg commands en actors toe aan de tijdlijn om de processen te verduidelijken."
   },
   {
-    label: "Actors & Systems",
-    duration: 10 * 60,
+    label: "Policies & Systems & Constraints",
+    duration: 15 * 60,
     color: "#6B46DB",
-    description: "Koppel actoren en (externe) systemen aan commands om acties te duiden."
-  },
-  {
-    label: "Constraints",
-    duration: 5 * 60,
-    color: "#D44000",
-    description: "Markeer constraints en beperkingen in het proces waar regels gelden."
+    description: "Koppel policies / constraints en (externe) systemen aan commands om acties te duiden."
   },
 ];
 
