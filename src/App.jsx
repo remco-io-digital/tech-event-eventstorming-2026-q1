@@ -34,7 +34,7 @@ const DEEL2_PHASES = [
     label: "Policies & Systems & Constraints",
     duration: 15 * 60,
     color: "#6B46DB",
-    description: "Koppel policies / constraints en (externe) systemen aan commands om acties te duiden."
+    description: "Koppel policies, constraints en (externe) systemen aan commands om acties te verduidelijken."
   },
 ];
 
