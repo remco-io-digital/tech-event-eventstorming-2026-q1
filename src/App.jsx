@@ -438,7 +438,7 @@ export default function App() {
               </div>
           ) : (
               <div style={{padding: "5px"}}>
-                <img src={biggerFlowPart2} alt="Bigger Flow Voorbeeld" style={{maxWidth: "1000px", width: "100%", height: "auto", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)"}} />
+                <img src={biggerFlowPart2} alt="Bigger Flow Voorbeeld" style={{maxWidth: "100%", width: "100%", height: "auto", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)"}} />
               </div>
           )}
         </div>
