@@ -1,23 +1,25 @@
 import {useState, useEffect, useRef} from "react";
+import eventsPart1 from "./assets/1-events.excalidraw.png";
+import biggerFlowPart2 from "./assets/7-bigger-flow.excalidraw.png";
 
 const DEEL1_PHASES = [
   {
     label: "Chaotic Exploration",
-    duration: 5 * 60,
+    duration: 10 * 60,
     color: "#0000D2",
     description: "Schrijf alle events op die je kunt bedenken. Geen volgorde, geen discussie, alles mag."
   },
   {
     label: "Enforcing the Timeline",
-    duration: 17 * 60,
-    color: "#7B2FBE",
+    duration: 10 * 60,
+    color: "#6B46DB",
     description: "Breng de events in chronologische volgorde. Identificeer gaps, duplicaten en conflicten."
   },
   {
-    label: "Actors & Hotspots",
-    duration: 7 * 60,
+    label: "Hotspots",
+    duration: 5 * 60,
     color: "#D44000",
-    description: "Wijs actoren toe aan events. Markeer hotspots, vragen en verbeterpunten."
+    description: "Wijs hotspots toe aan events, waar gaat het momenteel mis?"
   },
 ];
 
@@ -31,7 +33,7 @@ const DEEL2_PHASES = [
   {
     label: "Actors & Systems",
     duration: 10 * 60,
-    color: "#7B2FBE",
+    color: "#6B46DB",
     description: "Koppel actoren en (externe) systemen aan commands om acties te duiden."
   },
   {
@@ -43,14 +45,13 @@ const DEEL2_PHASES = [
 ];
 
 const STICKY_TYPES = {
-  EVENT: {label: "Domain Event", color: "#F5A623", textColor: "#000"},
+  EVENT: {label: "Domain Event", color: "#FFD8A8", border: "#F08C01", textColor: "#000"},
   HOTSPOT: {label: "Hotspot / Question", color: "#E8494A", textColor: "#fff", border: "#B03030"},
-  COMMAND: {label: "Command", color: "#A8D4F5", textColor: "#000"},
-  POLICY: {label: "Policy", color: "#C9A8F5", textColor: "#000"},
-  ACTOR: {label: "Actor", color: "#F5F0C0", textColor: "#000", border: "#C8B800", isSmall: true},
-  READ_MODEL: {label: "Read Model / System", color: "#A8F5C0", textColor: "#000"},
-  EXTERNAL_SYSTEM: {label: "(External) System", color: "#F5A8D4", textColor: "#000", isLarge: true},
-  CONSTRAINT: {label: "Constraint", color: "#F5CBA7", textColor: "#000"},
+  COMMAND: {label: "Command", color: "#A5D8FF", border: "#1A71C2", textColor: "#000"},
+  POLICY: {label: "Policy", color: "#D0BFFF", border: "#6B46DB", textColor: "#000"},
+  EXTERNAL_SYSTEM: {label: "(External) System", color: "#EEBEFA", border: "#9E37B6", textColor: "#000", isLarge: true},
+  ACTOR: {label: "Actor", color: "#FFEC9A", textColor: "#000", border: "#000", isSmall: true},
+  CONSTRAINT: {label: "Constraint", color: "#FFEC9A", textColor: "#000", border: "#000"},
 };
 
 const DEEL1_LEGEND = [STICKY_TYPES.EVENT, STICKY_TYPES.HOTSPOT];
@@ -271,7 +272,7 @@ export default function App() {
               automatisch aaneengesloten stoelen toe op één rij (max. 8 per reservering).
             </p>
             <p style={{fontSize: "18px", color: "#242424", lineHeight: "1.65", margin: "0 0 12px"}}>
-              De bezoeker heeft <strong>15 minuten</strong> om de reservering te bevestigen — daarna vervallen de
+              De bezoeker heeft <strong>15 minuten</strong> om de reservering te bevestigen, daarna vervallen de
               plaatsen automatisch. Zolang de timer loopt kan de stoelkeuze worden aangepast.
             </p>
             <p style={{fontSize: "18px", color: "#242424", lineHeight: "1.65", margin: 0}}>
@@ -428,103 +429,16 @@ export default function App() {
             marginBottom: "16px",
             borderTop: "1px solid #eee",
             paddingTop: "20px"
-          }}>Voorbeeld: Food Delivery App
+          }}>Voorbeeld
           </div>
 
           {activeTab === 1 ? (
-              <div style={{display: "flex", gap: "15px", alignItems: "center", padding: "5px"}}>
-                <StickyNote type={STICKY_TYPES.EVENT} isExample>Order geplaatst</StickyNote>
-                <StickyNote type={STICKY_TYPES.HOTSPOT} isExample>⚡ Hotspot: Wat als restaurant gesloten is?</StickyNote>
+              <div style={{padding: "5px"}}>
+                <img src={eventsPart1} alt="Events Voorbeeld" style={{maxWidth: "100%", height: "auto", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)"}} />
               </div>
           ) : (
-              <div style={{
-                padding: "20px",
-                position: "relative",
-                minHeight: "260px",
-                overflowX: "auto",
-                display: "flex",
-                flexDirection: "column",
-                gap: "50px"
-              }}>
-                {/* Hoofdrij */}
-                <div style={{display: "flex", gap: "15px", alignItems: "center", position: "relative", zIndex: 1}}>
-                  <StickyNote type={STICKY_TYPES.READ_MODEL} isExample>Menu overzicht</StickyNote>
-
-                  <Arrow />
-
-                  <div style={{position: "relative", marginRight: "10px"}}>
-                    <StickyNote type={STICKY_TYPES.COMMAND} isExample>Plaats Order</StickyNote>
-                    <StickyNote type={STICKY_TYPES.ACTOR} isExample
-                                style={{
-                                  position: "absolute",
-                                  top: "-20px",
-                                  left: "-20px",
-                                  zIndex: 10,
-                                  boxShadow: "1px 1px 3px rgba(0,0,0,0.2)"
-                                }}>
-                      Klant
-                    </StickyNote>
-                    <StickyNote type={STICKY_TYPES.CONSTRAINT} isExample
-                                style={{
-                                  position: "absolute",
-                                  top: "110px",
-                                  left: "20px",
-                                  zIndex: 5,
-                                  fontSize: "12px",
-                                  height: "60px",
-                                  width: "100px",
-                                  boxShadow: "1px 1px 3px rgba(0,0,0,0.1)"
-                                }}>
-                      Min. €15,-
-                    </StickyNote>
-                  </div>
-
-                  <Arrow />
-
-                  <StickyNote type={STICKY_TYPES.EXTERNAL_SYSTEM} isExample>Betaalsysteem</StickyNote>
-
-                  <Arrow />
-
-                  <StickyNote type={STICKY_TYPES.EVENT} isExample>Betaling ontvangen</StickyNote>
-
-                  <Arrow />
-
-                  <div style={{position: "relative"}}>
-                    <StickyNote type={STICKY_TYPES.POLICY} isExample>Zodra betaling ontvangen, bevestig restaurant</StickyNote>
-                    {/* Vertakking SVG */}
-                    <div style={{position: "absolute", left: "67px", top: "135px", zIndex: 0}}>
-                      <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                        <path d="M0 0 Q 0 40, 60 40" stroke="#747474" strokeWidth="2" fill="none"
-                              markerEnd="url(#arrowhead)"/>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <Arrow />
-
-                  <StickyNote type={STICKY_TYPES.COMMAND} isExample>Bevestig Order</StickyNote>
-
-                  <Arrow />
-
-                  <StickyNote type={STICKY_TYPES.EVENT} isExample>Order bevestigd</StickyNote>
-                </div>
-
-                {/* Tweede rij */}
-                <div style={{display: "flex", gap: "15px", alignItems: "center", marginLeft: "930px"}}>
-                  <StickyNote type={STICKY_TYPES.COMMAND} isExample>Stuur notificatie</StickyNote>
-                  <Arrow />
-                  <StickyNote type={STICKY_TYPES.EXTERNAL_SYSTEM} isExample>Notificatiesysteem</StickyNote>
-                  <Arrow />
-                  <StickyNote type={STICKY_TYPES.EVENT} isExample>Klant genotificeerd</StickyNote>
-                </div>
-
-                <svg style={{position: "absolute", width: 0, height: 0}}>
-                  <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                      <polygon points="0 0, 10 3.5, 0 7" fill="#747474"/>
-                    </marker>
-                  </defs>
-                </svg>
+              <div style={{padding: "5px"}}>
+                <img src={biggerFlowPart2} alt="Bigger Flow Voorbeeld" style={{maxWidth: "100%", height: "auto", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)"}} />
               </div>
           )}
         </div>
