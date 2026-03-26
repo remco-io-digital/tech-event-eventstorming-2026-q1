@@ -191,17 +191,16 @@ export default function App() {
         boxSizing: "border-box",
         width: "100%"
       }}>
-        <div style={{
+        <div className="main-container" style={{
           width: "100%",
           maxWidth: "1440px",
-          aspectRatio: "16 / 9",
           display: "flex",
           flexDirection: "column",
           boxSizing: "border-box",
         }}>
 
         {/* Header */}
-        <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px"}}>
+        <div className="header" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px"}}>
           <div>
             <div style={{
               fontSize: "16px",
@@ -211,14 +210,14 @@ export default function App() {
               textTransform: "uppercase"
             }}>Break-out Assignment
             </div>
-            <h1 style={{margin: "4px 0 0", fontSize: "36px", fontWeight: 800, color: "#242424"}}>Bioscoop
+            <h1 className="main-title" style={{margin: "4px 0 0", fontSize: "36px", fontWeight: 800, color: "#242424"}}>Bioscoop
               Kaartjesreservering</h1>
           </div>
-          <div style={{fontSize: "14px", color: "#747474", fontWeight: 500}}>Event Storming</div>
+          <div className="sub-title" style={{fontSize: "14px", color: "#747474", fontWeight: 500}}>Event Storming</div>
         </div>
 
         {/* Tabs */}
-        <div style={{display: "flex", gap: "10px", marginBottom: "20px"}}>
+        <div className="tabs" style={{display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap"}}>
           <button
               onClick={() => setActiveTab(1)}
               style={{
@@ -243,7 +242,7 @@ export default function App() {
           </button>
         </div>
 
-        <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px"}}>
+        <div className="grid-container" style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px"}}>
 
           {/* Casus */}
           <div style={{
@@ -325,7 +324,7 @@ export default function App() {
             </div>
 
             {/* Clock */}
-            <div style={{
+            <div className="timer-clock" style={{
               textAlign: "center", fontSize: "82px", fontWeight: 900, letterSpacing: "-2px",
               color: isDone ? "#E8494A" : isUrgent ? "#E8494A" : "#242424",
               fontVariantNumeric: "tabular-nums", marginBottom: "16px", lineHeight: 1,
@@ -438,10 +437,11 @@ export default function App() {
         </div>
 
         {/* Phases overview */}
-        <div style={{display: "flex", gap: "12px", marginTop: "16px"}}>
+        <div className="phases-overview" style={{display: "flex", gap: "12px", marginTop: "16px"}}>
           {currentPhases.map((p, i) => (
               <div
                   key={i}
+                  className={`phase-card ${currentPhaseIndex === i ? 'active' : ''}`}
                   onClick={() => handlePhaseChange(i)}
                   style={{
                     flex: 1, borderRadius: "10px", padding: "14px 16px", cursor: "pointer",
@@ -450,6 +450,7 @@ export default function App() {
                     boxShadow: currentPhaseIndex === i ? `0 4px 16px ${p.color}55` : "0 1px 4px rgba(0,0,0,0.07)",
                     transition: "all 0.2s",
                     borderLeft: currentPhaseIndex !== i ? `4px solid ${p.color}` : "none",
+                    borderTopColor: p.color,
                   }}
               >
                 <div style={{
@@ -474,7 +475,47 @@ export default function App() {
           ))}
         </div>
 
-        <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }`}</style>
+        <style>{`
+          @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+          
+          @media (max-width: 1024px) {
+            .grid-container {
+              grid-template-columns: 1fr !important;
+            }
+            .phases-overview {
+              flex-direction: column;
+            }
+            .main-title {
+              font-size: 28px !important;
+            }
+          }
+          
+          @media (max-width: 640px) {
+            .header {
+              flex-direction: column;
+              align-items: flex-start !important;
+            }
+            .sub-title {
+              margin-top: 8px;
+            }
+            .main-title {
+              font-size: 24px !important;
+            }
+            .tabs button {
+              flex: 1;
+              font-size: 14px !important;
+              padding: 8px 12px !important;
+            }
+            .timer-clock {
+              font-size: 48px !important;
+            }
+            .phase-card {
+              border-left: none !important;
+              border-top: 4px solid transparent;
+              border-top-color: inherit;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );
